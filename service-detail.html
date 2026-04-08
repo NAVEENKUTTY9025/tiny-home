@@ -429,22 +429,46 @@
         <a href="faq.html" class="mobile-nav-link">Faq</a>
         <a href="contact.html" class="mobile-nav-link">Contact</a>
         <div class="h-px bg-sage/30 my-3"></div>
+       <div class="flex flex-col gap-3 mt-4">
+
+    <!-- Account -->
+    <div>
         <div class="control-btn" onclick="toggleMobileSubmenu('mobileAuthSub')">
-            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="user-circle" class="w-4 h-4"></i> Account</span>
+            <span class="font-semibold text-sm flex items-center gap-2">
+                <i data-lucide="user-circle" class="w-4 h-4"></i> Account
+            </span>
             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
         </div>
-        <div id="mobileAuthSub" class="mobile-submenu">
-            <a href="login.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="log-in" class="w-4 h-4"></i> Login</a>
-            <a href="register.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up</a>
+
+        <div id="mobileAuthSub" class="mobile-submenu mt-2">
+            <a href="#" class="flex items-center gap-2 py-3 px-4 text-sm font-medium">
+                <i data-lucide="log-in" class="w-4 h-4"></i> Login
+            </a>
+            <a href="#" class="flex items-center gap-2 py-3 px-4 text-sm font-medium">
+                <i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up
+            </a>
         </div>
-        <div class="control-btn" onclick="toggleDirectionMobile()">
-            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="arrow-left-right" class="w-4 h-4"></i> RTL Mode</span>
-            <span id="mobileDirText" class="text-xs font-bold bg-sage/20 px-2 py-1 rounded">LTR</span>
-        </div>
-        <div class="control-btn" onclick="toggleTheme()">
-            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="moon" class="w-4 h-4 dark:hidden"></i><i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i> Dark Mode</span>
-            <span class="text-xs bg-sage/20 px-2 py-1 rounded">🌓</span>
-        </div>
+    </div>
+
+    <!-- RTL -->
+    <div class="control-btn" onclick="toggleDirectionMobile()">
+        <span class="font-semibold text-sm flex items-center gap-2">
+            <i data-lucide="arrow-left-right" class="w-4 h-4"></i> RTL Mode
+        </span>
+        <span id="mobileDirText" class="text-xs font-bold bg-sage/20 px-2 py-1 rounded">LTR</span>
+    </div>
+
+    <!-- Dark Mode -->
+    <div class="control-btn" onclick="toggleTheme()">
+        <span class="font-semibold text-sm flex items-center gap-2">
+            <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
+            Dark Mode
+        </span>
+        <span class="text-xs bg-sage/20 px-2 py-1 rounded">🌓</span>
+    </div>
+
+</div>
     </div>
 
     <!-- DYNAMIC SERVICE DETAIL CONTENT -->
