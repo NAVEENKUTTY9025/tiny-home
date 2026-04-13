@@ -23,6 +23,7 @@
             --footer-text: #4B5563;
             --faq-bg: #FFFFFF;
             --answer-text: #4B5563;
+            --faq-border: #E5E7EB;
         }
         
         .dark {
@@ -35,8 +36,9 @@
             --nav-bg: #111111;
             --footer-bg: #0A0A0A;
             --footer-text: #9CA3AF;
-            --faq-bg: #1A1A1A;
+            --faq-bg: #121212;
             --answer-text: #B0B0B0;
+            --faq-border: #2A2A2A;
         }
         
         body { 
@@ -140,13 +142,11 @@
             transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             box-shadow: 0 0 25px rgba(0,0,0,0.3);
         }
-        /* LTR mode: menu slides from right */
         html:not([dir="rtl"]) #mobileMenu {
             right: 0;
             left: auto;
             transform: translateX(100%);
         }
-        /* RTL mode: menu slides from left */
         html[dir="rtl"] #mobileMenu {
             left: 0;
             right: auto;
@@ -156,7 +156,6 @@
             transform: translateX(0) !important;
         }
         
-        /* Responsive breakpoints */
         @media (max-width: 1279px) {
             .desktop-nav-links, .desktop-controls-wrapper { display: none !important; }
             .mobile-menu-btn { display: flex !important; }
@@ -211,22 +210,31 @@
         }
         .control-btn:hover { background: rgba(193, 154, 107, 0.2); }
         
+        /* ===== IMPROVED FAQ ACCORDION STYLES ===== */
         .faq-item {
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
             background-color: var(--faq-bg);
-            border-radius: 16px;
-            margin-bottom: 12px;
-            padding: 0 20px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid var(--faq-border);
+            border-radius: 20px;
+            margin-bottom: 16px;
+            transition: all 0.25s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .faq-item:hover {
+            border-color: #C19A6B40;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         .faq-question {
             cursor: pointer;
             transition: all 0.2s ease;
-            color: var(--text-primary);
+            padding: 1.25rem 1.5rem;
+            user-select: none;
+            border-radius: 20px;
         }
         .faq-question span {
             color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: -0.01em;
         }
         .faq-question:hover span {
             color: #C19A6B;
@@ -234,28 +242,41 @@
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
             color: var(--answer-text);
-            line-height: 1.6;
+            line-height: 1.65;
+            font-size: 0.98rem;
+            padding: 0 1.5rem;
         }
         .faq-answer.open {
-            max-height: 500px;
+            max-height: 480px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+        .faq-icon {
+            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            color: #C19A6B;
+        }
+        .rotate-icon {
+            transform: rotate(180deg);
         }
         .category-tab {
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             cursor: pointer;
             background-color: transparent;
             color: var(--text-primary);
-            border-color: #C19A6B;
+            border: 1.5px solid #C19A6B60;
+            font-weight: 600;
+            letter-spacing: -0.2px;
         }
         .category-tab.active {
             background-color: #C19A6B;
             color: white;
             border-color: #C19A6B;
+            box-shadow: 0 2px 8px rgba(193,154,107,0.3);
         }
         .dark .category-tab:not(.active) {
             color: #E5E7EB;
-            border-color: #C19A6B;
+            border-color: #C19A6B80;
         }
         .stat-text {
             color: var(--text-secondary);
@@ -276,7 +297,17 @@
             color: white;
         }
         .hero-subtext {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.92);
+        }
+        
+        /* extra bottom padding for content spacing */
+        .faq-section-spacing {
+            padding-bottom: 5rem;
+        }
+        @media (max-width: 768px) {
+            .faq-question { padding: 1rem 1.25rem; }
+            .faq-question span { font-size: 0.95rem; }
+            .faq-answer.open { padding: 0 1.25rem 1.25rem 1.25rem; }
         }
     </style>
     <script>
@@ -285,10 +316,10 @@
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
-   <nav class="fixed w-full z-[100] px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+    <!-- NAVIGATION BAR (same robust structure) -->
+    <nav class="fixed w-full z-[100] px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
         <div class="max-w-[1400px] mx-auto flex items-center justify-between bg-white/95 dark:bg-black/95 backdrop-blur-xl px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-sage/30 shadow-lg">
-            <a href="#" class="logo-brand flex items-center gap-2">
+            <a href="index.html" class="logo-brand flex items-center gap-2">
                 <i data-lucide="home" class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 logo-icon"></i>
                 <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
             </a>
@@ -339,25 +370,14 @@
         </div>
     </nav>
 
-    <!-- MOBILE MENU - FIXED RTL BEHAVIOR -->
+    <!-- MOBILE MENU (unchanged functional) -->
     <div id="mobileMenu" class="bg-white dark:bg-gray-900 shadow-2xl">
         <div class="flex justify-between items-center mb-6">
-            <a href="#" class="logo-brand flex items-center gap-2">
-                <i data-lucide="home" class="w-7 h-7 logo-icon"></i>
-                <span class="text-2xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
-            </a>
-            <button onclick="toggleMobileMenu()" class="p-2 bg-sage/20 rounded-full hover:bg-sage/40">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
+            <a href="index.html" class="logo-brand flex items-center gap-2"><i data-lucide="home" class="w-7 h-7 logo-icon"></i><span class="text-2xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span></a>
+            <button onclick="toggleMobileMenu()" class="p-2 bg-sage/20 rounded-full hover:bg-sage/40"><i data-lucide="x" class="w-5 h-5"></i></button>
         </div>
-        
-        <button onclick="toggleMobileSubmenu('mobileHomeSub')" class="mobile-nav-link">
-            <span>Home</span> <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
-        </button>
-        <div id="mobileHomeSub" class="mobile-submenu open">
-            <a href="index.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home1</a>
-            <a href="home2.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home2</a>
-        </div>
+        <button onclick="toggleMobileSubmenu('mobileHomeSub')" class="mobile-nav-link"><span>Home</span> <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i></button>
+        <div id="mobileHomeSub" class="mobile-submenu open"><a href="index.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home1</a><a href="home2.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home2</a></div>
         <a href="about.html" class="mobile-nav-link">About</a>
         <a href="ourhomes.html" class="mobile-nav-link">Our Homes</a>
         <a href="service.html" class="mobile-nav-link">Services</a>
@@ -365,31 +385,11 @@
         <a href="design.html" class="mobile-nav-link">Designs</a>
         <a href="faq.html" class="mobile-nav-link bg-[#C19A6B]/20 text-[#C19A6B]">Faq</a>
         <a href="contact.html" class="mobile-nav-link">Contact</a>
-        
         <div class="h-px bg-sage/30 my-3"></div>
-        
-        <div class="control-btn" onclick="toggleMobileSubmenu('mobileAuthSub')">
-            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="user-circle" class="w-4 h-4"></i> Account</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
-        </div>
-        <div id="mobileAuthSub" class="mobile-submenu">
-            <a href="#" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="log-in" class="w-4 h-4"></i> Login</a>
-            <a href="#" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up</a>
-        </div>
-        
-        <div class="control-btn" onclick="toggleDirectionMobile()">
-            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="arrow-left-right" class="w-4 h-4"></i> RTL Mode</span>
-            <span id="mobileDirText" class="text-xs font-bold bg-sage/20 px-2 py-1 rounded">LTR</span>
-        </div>
-        
-        <div class="control-btn" onclick="toggleTheme()">
-            <span class="font-semibold text-sm flex items-center gap-2">
-                <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
-                <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
-                Dark Mode
-            </span>
-            <span class="text-xs bg-sage/20 px-2 py-1 rounded">🌓</span>
-        </div>
+        <div class="control-btn" onclick="toggleMobileSubmenu('mobileAuthSub')"><span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="user-circle" class="w-4 h-4"></i> Account</span><i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i></div>
+        <div id="mobileAuthSub" class="mobile-submenu"><a href="login.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="log-in" class="w-4 h-4"></i> Login</a><a href="register.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up</a></div>
+        <div class="control-btn" onclick="toggleDirectionMobile()"><span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="arrow-left-right" class="w-4 h-4"></i> RTL Mode</span><span id="mobileDirText" class="text-xs font-bold bg-sage/20 px-2 py-1 rounded">LTR</span></div>
+        <div class="control-btn" onclick="toggleTheme()"><span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="moon" class="w-4 h-4 dark:hidden"></i><i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i> Dark Mode</span><span class="text-xs bg-sage/20 px-2 py-1 rounded">🌓</span></div>
     </div>
 
     <!-- HERO SECTION -->
@@ -426,116 +426,40 @@
     <!-- CATEGORY TABS -->
     <section class="py-8" style="background-color: var(--bg-primary);">
         <div class="container mx-auto px-4 max-w-[1100px]">
-            <div class="flex flex-wrap justify-center gap-3 mb-8">
-                <button onclick="filterCategory('all')" class="category-tab active px-6 py-2 rounded-full border text-sm font-semibold transition">All Questions</button>
-                <button onclick="filterCategory('building')" class="category-tab px-6 py-2 rounded-full border text-sm font-semibold transition">🏠 Building Process</button>
-                <button onclick="filterCategory('finance')" class="category-tab px-6 py-2 rounded-full border text-sm font-semibold transition">💰 Pricing & Finance</button>
-                <button onclick="filterCategory('living')" class="category-tab px-6 py-2 rounded-full border text-sm font-semibold transition">🌱 Tiny Living</button>
-                <button onclick="filterCategory('sustainability')" class="category-tab px-6 py-2 rounded-full border text-sm font-semibold transition">♻️ Sustainability</button>
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button onclick="filterCategory('all')" class="category-tab active px-6 py-2.5 rounded-full border text-sm font-semibold transition-all">All Questions</button>
+                <button onclick="filterCategory('building')" class="category-tab px-6 py-2.5 rounded-full border text-sm font-semibold transition-all">🏠 Building Process</button>
+                <button onclick="filterCategory('finance')" class="category-tab px-6 py-2.5 rounded-full border text-sm font-semibold transition-all">💰 Pricing & Finance</button>
+                <button onclick="filterCategory('living')" class="category-tab px-6 py-2.5 rounded-full border text-sm font-semibold transition-all">🌱 Tiny Living</button>
+                <button onclick="filterCategory('sustainability')" class="category-tab px-6 py-2.5 rounded-full border text-sm font-semibold transition-all">♻️ Sustainability</button>
             </div>
         </div>
     </section>
 
-    <!-- FAQ ACCORDION -->
-    <section class="py-12 pb-24 section-bg-gradient">
+    <!-- IMPROVED FAQ ACCORDION SECTION with extra bottom spacing -->
+    <section class="py-12 faq-section-spacing section-bg-gradient">
         <div class="container mx-auto px-4 max-w-[1000px]">
-            <div class="space-y-4" id="faqContainer">
-                <div class="faq-item" data-category="building"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(0)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="hammer" class="w-5 h-5 text-[#C19A6B]"></i> How long does it take to build a custom tiny home?</span><i id="icon0" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer0" class="faq-answer pl-8 pb-5">Typical timeline is 12-16 weeks from design approval to completion. This includes custom cabinetry, electrical, plumbing, and final inspections. We prioritize quality without unnecessary delays.</div></div>
-                <div class="faq-item" data-category="building"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(1)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="file-text" class="w-5 h-5 text-[#C19A6B]"></i> Do I need a permit for a tiny home?</span><i id="icon1" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer1" class="faq-answer pl-8 pb-5">Permit requirements vary by location. Our team assists with zoning research and can connect you with local experts. Most tiny homes on wheels are classified as RVs, while foundation-built homes follow standard residential codes.</div></div>
-                <div class="faq-item" data-category="finance"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(2)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="dollar-sign" class="w-5 h-5 text-[#C19A6B]"></i> What's the average cost of a TinyCraft home?</span><i id="icon2" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer2" class="faq-answer pl-8 pb-5">Our models range from $49,900 to $89,500 depending on size, finishes, and off-grid features. Custom builds start at $65,000. We offer transparent pricing with no hidden fees.</div></div>
-                <div class="faq-item" data-category="finance"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(3)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="credit-card" class="w-5 h-5 text-[#C19A6B]"></i> Do you offer financing options?</span><i id="icon3" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer3" class="faq-answer pl-8 pb-5">Yes! We partner with specialized tiny home lenders offering RV loans, personal loans, and construction-to-permanent financing. Our team can guide you through pre-approval and payment plans.</div></div>
-                <div class="faq-item" data-category="living"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(4)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="home" class="w-5 h-5 text-[#C19A6B]"></i> Where can I park my tiny home?</span><i id="icon4" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer4" class="faq-answer pl-8 pb-5">Options include private land, tiny home communities, RV parks, and backyard dwellings. We provide a directory of tiny-friendly locations and can help with zoning research in your area.</div></div>
-                <div class="faq-item" data-category="living"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(5)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="users" class="w-5 h-5 text-[#C19A6B]"></i> Can a tiny home accommodate a family?</span><i id="icon5" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer5" class="faq-answer pl-8 pb-5">Absolutely! Our larger models (400-600 sq ft) feature multiple lofts, bunk rooms, and clever storage. We specialize in family-friendly layouts with space for 2-4 people comfortably.</div></div>
-                <div class="faq-item" data-category="sustainability"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(6)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="leaf" class="w-5 h-5 text-[#C19A6B]"></i> Are TinyCraft homes eco-friendly?</span><i id="icon6" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer6" class="faq-answer pl-8 pb-5">Yes! We use sustainable timber, low-VOC paints, energy-efficient appliances, and solar-ready electrical. Many of our homes achieve net-zero energy use with optional solar packages.</div></div>
-                <div class="faq-item" data-category="sustainability"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(7)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="droplets" class="w-5 h-5 text-[#C19A6B]"></i> Can I go off-grid with my tiny home?</span><i id="icon7" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer7" class="faq-answer pl-8 pb-5">Definitely! We offer off-grid packages including solar panels, battery storage, composting toilets, and rainwater collection systems. Perfect for remote locations and sustainable living enthusiasts.</div></div>
-                <div class="faq-item" data-category="building"><div class="faq-question py-5 flex justify-between items-center" onclick="toggleAnswer(8)"><span class="text-lg font-semibold flex items-center gap-3"><i data-lucide="truck" class="w-5 h-5 text-[#C19A6B]"></i> Do you deliver tiny homes nationwide?</span><i id="icon8" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 text-[#C19A6B]"></i></div><div id="answer8" class="faq-answer pl-8 pb-5">Yes! We deliver to all 50 states. Our logistics team handles transportation permits, route planning, and on-site placement. Delivery costs vary by distance.</div></div>
+            <div class="space-y-3" id="faqContainer">
+                <!-- each faq-item uses clean data-category + toggleAnswer with smooth icon rotation -->
+                <div class="faq-item" data-category="building"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(0)"><span class="flex items-center gap-3"><i data-lucide="hammer" class="w-5 h-5 text-[#C19A6B]"></i> How long does it take to build a custom tiny home?</span><i id="icon0" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer0" class="faq-answer">Our typical build timeline is 12-16 weeks from design approval to final walkthrough. This includes custom cabinetry, electrical, plumbing, and all necessary inspections. We prioritize quality craftsmanship while ensuring efficient project management — no unnecessary delays, just meticulous tiny home construction.</div></div>
+                <div class="faq-item" data-category="building"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(1)"><span class="flex items-center gap-3"><i data-lucide="file-text" class="w-5 h-5 text-[#C19A6B]"></i> Do I need a permit for a tiny home?</span><i id="icon1" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer1" class="faq-answer">Permit requirements vary by city and county. Tiny homes on wheels are often classified as RVs, while foundation-built models follow local residential codes. Our team provides zoning assistance and connects you with local permit experts. We’ll help you navigate regulations so your tiny home is 100% compliant.</div></div>
+                <div class="faq-item" data-category="finance"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(2)"><span class="flex items-center gap-3"><i data-lucide="dollar-sign" class="w-5 h-5 text-[#C19A6B]"></i> What's the average cost of a TinyCraft home?</span><i id="icon2" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer2" class="faq-answer">Our standard models range from $49,900 to $89,500 depending on size, finishes, and off-grid capabilities. Fully custom builds start at $65,000. We provide transparent, itemized pricing with no hidden fees — you'll know exactly where every dollar goes, from foundation to fixtures.</div></div>
+                <div class="faq-item" data-category="finance"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(3)"><span class="flex items-center gap-3"><i data-lucide="credit-card" class="w-5 h-5 text-[#C19A6B]"></i> Do you offer financing options?</span><i id="icon3" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer3" class="faq-answer">Absolutely! We partner with specialized tiny home lenders offering RV loans, personal loans, and construction-to-permanent financing. Our finance concierge team guides you through pre-approval, flexible payment plans, and low down-payment options — making tiny home ownership accessible.</div></div>
+                <div class="faq-item" data-category="living"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(4)"><span class="flex items-center gap-3"><i data-lucide="home" class="w-5 h-5 text-[#C19A6B]"></i> Where can I park my tiny home?</span><i id="icon4" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer4" class="faq-answer">You have several options: private land (with owner permission), dedicated tiny home communities, RV parks, or as an accessory dwelling unit (ADU) on a family property. We provide an up-to-date directory of tiny-friendly locations nationwide and assist with zoning research for your specific area.</div></div>
+                <div class="faq-item" data-category="living"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(5)"><span class="flex items-center gap-3"><i data-lucide="users" class="w-5 h-5 text-[#C19A6B]"></i> Can a tiny home accommodate a family?</span><i id="icon5" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer5" class="faq-answer">Yes! Our larger models (400–600 sq ft) feature multiple lofts, clever bunk rooms, and smart storage solutions. We specialize in family-friendly floor plans that comfortably sleep 2–4 people while maintaining privacy and functional common areas. Many families thrive in thoughtfully designed tiny spaces.</div></div>
+                <div class="faq-item" data-category="sustainability"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(6)"><span class="flex items-center gap-3"><i data-lucide="leaf" class="w-5 h-5 text-[#C19A6B]"></i> Are TinyCraft homes eco-friendly?</span><i id="icon6" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer6" class="faq-answer">Sustainability is at our core. We use FSC-certified timber, low-VOC paints, energy-efficient appliances, spray foam insulation, and solar-ready electrical systems. Many of our models achieve net-zero energy usage with optional solar packages — reducing your carbon footprint significantly.</div></div>
+                <div class="faq-item" data-category="sustainability"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(7)"><span class="flex items-center gap-3"><i data-lucide="droplets" class="w-5 h-5 text-[#C19A6B]"></i> Can I go off-grid with my tiny home?</span><i id="icon7" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer7" class="faq-answer">Definitely. Our off-grid package includes high-efficiency solar panels, lithium battery storage, composting toilets, rainwater catchment, and propane backup. Perfect for remote locations or self-sufficient living. You'll enjoy energy independence without sacrificing modern comfort.</div></div>
+                <div class="faq-item" data-category="building"><div class="faq-question flex justify-between items-center" onclick="toggleAnswer(8)"><span class="flex items-center gap-3"><i data-lucide="truck" class="w-5 h-5 text-[#C19A6B]"></i> Do you deliver tiny homes nationwide?</span><i id="icon8" data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i></div><div id="answer8" class="faq-answer">Yes, we deliver to all 50 states! Our logistics team manages transportation permits, route planning, and on-site placement using professional flatbed carriers. Delivery costs vary by distance, and we provide a firm quote before production begins.</div></div>
             </div>
             <div id="noResults" class="text-center py-12 hidden"><i data-lucide="search-x" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i><p class="text-gray-500">No matching questions found. Try a different keyword or <a href="#" class="text-[#C19A6B] font-semibold">contact us directly</a>.</p></div>
         </div>
     </section>
 
-    <!-- CTA BANNER -->
+    <!-- CTA BANNER (with bottom padding) -->
     <section class="py-20 relative overflow-hidden bg-[#1A2A1A]"><div class="absolute inset-0 opacity-10"></div><div class="container mx-auto px-4 max-w-[1000px] relative z-10 text-center"><div class="max-w-2xl mx-auto"><i data-lucide="headphones" class="w-16 h-16 text-[#C19A6B] mx-auto mb-6"></i><h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Still Have Questions?</h2><p class="text-lg text-gray-200 mb-8">Our tiny home specialists are ready to help you find the perfect solution for your lifestyle.</p><div class="flex flex-wrap justify-center gap-4"><a href="#" class="px-8 py-4 bg-[#C19A6B] text-white rounded-xl font-bold hover:bg-[#A87B4A] transition inline-flex items-center gap-2">Contact Our Team <i data-lucide="arrow-right" class="w-4 h-4"></i></a><a href="#" class="px-8 py-4 border-2 border-white/50 text-white rounded-xl font-bold hover:bg-white/10 transition inline-flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> Call (888) 553-9842</a></div><p class="text-sm text-gray-300 mt-6">✨ Live chat available Mon-Fri 9am-6pm PST</p></div></div></section>
 
-    <!-- RESOURCES -->
-    <section class="py-20" style="background-color: var(--bg-primary);">
-    <div class="container mx-auto px-4 max-w-[1300px]">
-
-        <!-- Header -->
-        <div class="text-center mb-12">
-            <i data-lucide="book-open" class="w-10 h-10 text-[#C19A6B] mx-auto"></i>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mt-3 resource-text">
-                Helpful Resources
-            </h2>
-            <p class="resource-desc mt-2 text-sm sm:text-base">
-                Continue your tiny home journey with these guides
-            </p>
-        </div>
-
-        <!-- Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 items-stretch text-center">
-
-            <!-- Card 1 -->
-            <div class="border-l-4 border-[#C19A6B] pl-5 sm:pl-6 h-full flex flex-col justify-between">
-                
-                <div class="flex-grow">
-                    <i data-lucide="clipboard-list" class="w-7 h-7 text-[#C19A6B] mb-3 mx-auto"></i>
-                    <h3 class="text-lg sm:text-xl font-bold resource-text mb-2">
-                        Tiny Home Checklist
-                    </h3>
-                    <p class="resource-desc text-sm">
-                        Everything you need before starting your build
-                    </p>
-                </div>
-
-                <a href="#" class="inline-block mt-4 text-[#C19A6B] font-semibold text-sm">
-                    Download Free →
-                </a>
-
-            </div>
-
-            <!-- Card 2 -->
-            <div class="border-l-4 border-[#C19A6B] pl-5 sm:pl-6 h-full flex flex-col justify-between">
-                
-                <div class="flex-grow">
-                    <i data-lucide="map" class="w-7 h-7 text-[#C19A6B] mb-3 mx-auto"></i>
-                    <h3 class="text-lg sm:text-xl font-bold resource-text mb-2">
-                        Zoning Guide
-                    </h3>
-                    <p class="resource-desc text-sm">
-                        Understanding tiny home regulations by state
-                    </p>
-                </div>
-
-                <a href="#" class="inline-block mt-4 text-[#C19A6B] font-semibold text-sm">
-                    Read Guide →
-                </a>
-
-            </div>
-
-            <!-- Card 3 -->
-            <div class="border-l-4 border-[#C19A6B] pl-5 sm:pl-6 h-full flex flex-col justify-between">
-                
-                <div class="flex-grow">
-                    <i data-lucide="video" class="w-7 h-7 text-[#C19A6B] mb-3 mx-auto"></i>
-                    <h3 class="text-lg sm:text-xl font-bold resource-text mb-2">
-                        Virtual Tours
-                    </h3>
-                    <p class="resource-desc text-sm">
-                        Explore our signature models from home
-                    </p>
-                </div>
-
-                <a href="#" class="inline-block mt-4 text-[#C19A6B] font-semibold text-sm">
-                    Watch Now →
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-</section>
+    <!-- RESOURCES SECTION (with enough spacing) -->
+    <section class="py-20" style="background-color: var(--bg-primary);"><div class="container mx-auto px-4 max-w-[1300px]"><div class="text-center mb-12"><i data-lucide="book-open" class="w-10 h-10 text-[#C19A6B] mx-auto"></i><h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mt-3 resource-text">Helpful Resources</h2><p class="resource-desc mt-2 text-sm sm:text-base">Continue your tiny home journey with these guides</p></div><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 items-stretch text-center"><div class="border-l-4 border-[#C19A6B] pl-5 sm:pl-6 h-full flex flex-col justify-between"><div class="flex-grow"><i data-lucide="clipboard-list" class="w-7 h-7 text-[#C19A6B] mb-3 mx-auto"></i><h3 class="text-lg sm:text-xl font-bold resource-text mb-2">Tiny Home Checklist</h3><p class="resource-desc text-sm">Everything you need before starting your build</p></div><a href="#" class="inline-block mt-4 text-[#C19A6B] font-semibold text-sm">Download Free →</a></div><div class="border-l-4 border-[#C19A6B] pl-5 sm:pl-6 h-full flex flex-col justify-between"><div class="flex-grow"><i data-lucide="map" class="w-7 h-7 text-[#C19A6B] mb-3 mx-auto"></i><h3 class="text-lg sm:text-xl font-bold resource-text mb-2">Zoning Guide</h3><p class="resource-desc text-sm">Understanding tiny home regulations by state</p></div><a href="#" class="inline-block mt-4 text-[#C19A6B] font-semibold text-sm">Read Guide →</a></div><div class="border-l-4 border-[#C19A6B] pl-5 sm:pl-6 h-full flex flex-col justify-between"><div class="flex-grow"><i data-lucide="video" class="w-7 h-7 text-[#C19A6B] mb-3 mx-auto"></i><h3 class="text-lg sm:text-xl font-bold resource-text mb-2">Virtual Tours</h3><p class="resource-desc text-sm">Explore our signature models from home</p></div><a href="#" class="inline-block mt-4 text-[#C19A6B] font-semibold text-sm">Watch Now →</a></div></div></div></section>
 
     <!-- FOOTER -->
     <footer class="pt-16 pb-8"><div class="container mx-auto px-4 md:px-8 max-w-[1300px]"><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16"><div class="space-y-6"><a href="#" class="logo-brand flex items-center gap-2"><i data-lucide="home" class="w-8 h-8 logo-icon"></i><span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span></a><p class="text-sm leading-relaxed">Designing sustainable tiny homes with soul — natural wood, earthy tones, and modern minimalism.</p></div><div><h4 class="text-lg font-black uppercase tracking-widest mb-6">Company</h4><ul class="space-y-3"><li><a href="#" class="transition-colors text-sm font-medium">About Us</a></li><li><a href="#" class="transition-colors text-sm font-medium">Our Homes</a></li><li><a href="#" class="transition-colors text-sm font-medium">Services</a></li><li><a href="#" class="transition-colors text-sm font-medium">Contact</a></li></ul></div><div><h4 class="text-lg font-black uppercase tracking-widest mb-6">Resources</h4><ul class="space-y-3"><li><a href="#" class="transition-colors text-sm font-medium">Tiny Home Guide</a></li><li><a href="#" class="transition-colors text-sm font-medium">Financing Options</a></li><li><a href="#" class="transition-colors text-sm font-medium">Workshops</a></li><li><a href="#" class="transition-colors text-sm font-medium">Blog</a></li></ul></div><div><h4 class="text-lg font-black uppercase tracking-widest mb-6">Contact</h4><ul class="space-y-4"><li class="flex gap-3 items-start contact-item"><i data-lucide="phone" class="w-5 h-5 shrink-0 mt-0.5"></i><span class="text-sm">+1 (888) 553-9842</span></li><li class="flex gap-3 items-start contact-item"><i data-lucide="mail" class="w-5 h-5 shrink-0 mt-0.5"></i><span class="text-sm">hello@tinycraft.com</span></li><li class="flex gap-3 items-start contact-item"><i data-lucide="map-pin" class="w-5 h-5 shrink-0 mt-0.5"></i><span class="text-sm">Portland, OR & Remote</span></li></ul></div></div><div class="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4"><p class="text-xs font-medium">© 2026 TinyCraft — Sustainable Tiny Home Builders. All Rights Reserved.</p><div class="flex gap-6"><a href="#" class="transition-colors text-xs font-medium">Privacy Policy</a><a href="#" class="transition-colors text-xs font-medium">Terms of Service</a><a href="#" class="transition-colors text-xs font-medium">Sitemap</a></div></div></div></footer>
@@ -544,98 +468,55 @@
         lucide.createIcons();
         function toggleDropdown(menuId, e) { if(e) e.stopPropagation(); document.querySelectorAll('.dropdown-content').forEach(d => { if(d.id !== menuId) d.classList.remove('show'); }); const m = document.getElementById(menuId); if(m) m.classList.toggle('show'); }
         window.addEventListener('click', () => { document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show')); });
-        
-        function toggleMobileMenu() { 
-            const mm = document.getElementById('mobileMenu'); 
-            mm.classList.toggle('open'); 
-            document.body.classList.toggle('menu-open', mm.classList.contains('open')); 
-            setTimeout(() => lucide.createIcons(), 50);
-        }
-        
-        function toggleMobileSubmenu(id) { 
-            const sub = document.getElementById(id); 
-            const btn = sub?.previousElementSibling;
-            const icon = btn?.querySelector('i[data-lucide="chevron-down"]'); 
-            sub?.classList.toggle('open'); 
-            if(icon) icon.style.transform = sub.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; 
-            setTimeout(() => lucide.createIcons(), 50); 
-        }
-        
-        function toggleTheme() { 
-            document.documentElement.classList.toggle('dark'); 
-            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); 
-            setTimeout(() => lucide.createIcons(), 50); 
-        }
-        
-        function toggleDirection() { 
-            const html = document.documentElement; 
-            const dirTextDesktop = document.getElementById('dirTextDesktop'); 
-            const mobileDirText = document.getElementById('mobileDirText'); 
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (html.dir === 'rtl') { 
-                html.dir = 'ltr'; 
-                if(dirTextDesktop) dirTextDesktop.innerText = 'LTR'; 
-                if(mobileDirText) mobileDirText.innerText = 'LTR';
-            } else { 
-                html.dir = 'rtl'; 
-                if(dirTextDesktop) dirTextDesktop.innerText = 'RTL'; 
-                if(mobileDirText) mobileDirText.innerText = 'RTL';
-            }
-            
-            // Force mobile menu to close and re-open with correct animation after direction change
-            if (mobileMenu && mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open');
-                setTimeout(() => {
-                    mobileMenu.classList.add('open');
-                }, 50);
-            }
-            setTimeout(() => { lucide.createIcons(); }, 50);
-        }
-        
+        function toggleMobileMenu() { const mm = document.getElementById('mobileMenu'); mm.classList.toggle('open'); document.body.classList.toggle('menu-open', mm.classList.contains('open')); setTimeout(() => lucide.createIcons(), 50); }
+        function toggleMobileSubmenu(id) { const sub = document.getElementById(id); const btn = sub?.previousElementSibling; const icon = btn?.querySelector('i[data-lucide="chevron-down"]'); sub?.classList.toggle('open'); if(icon) icon.style.transform = sub.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; setTimeout(() => lucide.createIcons(), 50); }
+        function toggleTheme() { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); setTimeout(() => lucide.createIcons(), 50); }
+        function toggleDirection() { const html = document.documentElement; const dirTextDesktop = document.getElementById('dirTextDesktop'); const mobileDirText = document.getElementById('mobileDirText'); const mobileMenu = document.getElementById('mobileMenu'); if (html.dir === 'rtl') { html.dir = 'ltr'; if(dirTextDesktop) dirTextDesktop.innerText = 'LTR'; if(mobileDirText) mobileDirText.innerText = 'LTR'; } else { html.dir = 'rtl'; if(dirTextDesktop) dirTextDesktop.innerText = 'RTL'; if(mobileDirText) mobileDirText.innerText = 'RTL'; } if (mobileMenu && mobileMenu.classList.contains('open')) { mobileMenu.classList.remove('open'); setTimeout(() => { mobileMenu.classList.add('open'); }, 50); } setTimeout(() => { lucide.createIcons(); }, 50); }
         function toggleDirectionMobile() { toggleDirection(); }
         
-        let openIndex = null;
-        function toggleAnswer(index) { 
-            const answer = document.getElementById(`answer${index}`); 
-            const icon = document.getElementById(`icon${index}`); 
-            if (openIndex === index) { 
-                answer.classList.remove('open'); 
-                if(icon) icon.style.transform = 'rotate(0deg)'; 
-                openIndex = null; 
-            } else { 
-                if (openIndex !== null) { 
-                    document.getElementById(`answer${openIndex}`).classList.remove('open'); 
-                    const prevIcon = document.getElementById(`icon${openIndex}`); 
-                    if(prevIcon) prevIcon.style.transform = 'rotate(0deg)'; 
-                } 
-                answer.classList.add('open'); 
-                if(icon) icon.style.transform = 'rotate(180deg)'; 
-                openIndex = index; 
-            } 
+        // Enhanced FAQ accordion with proper icon rotation and single-open behavior
+        let activeFaqIndex = null;
+        function toggleAnswer(index) {
+            const answerDiv = document.getElementById(`answer${index}`);
+            const iconSpan = document.getElementById(`icon${index}`);
+            if (!answerDiv) return;
+            if (activeFaqIndex === index) {
+                // close current
+                answerDiv.classList.remove('open');
+                if(iconSpan) iconSpan.classList.remove('rotate-icon');
+                activeFaqIndex = null;
+            } else {
+                // close previously opened one
+                if (activeFaqIndex !== null) {
+                    const prevAnswer = document.getElementById(`answer${activeFaqIndex}`);
+                    const prevIcon = document.getElementById(`icon${activeFaqIndex}`);
+                    if(prevAnswer) prevAnswer.classList.remove('open');
+                    if(prevIcon) prevIcon.classList.remove('rotate-icon');
+                }
+                answerDiv.classList.add('open');
+                if(iconSpan) iconSpan.classList.add('rotate-icon');
+                activeFaqIndex = index;
+            }
+            setTimeout(() => lucide.createIcons(), 20);
         }
         
-        function filterCategory(category) { 
-            document.querySelectorAll('.category-tab').forEach(tab => { 
-                tab.classList.remove('active', 'bg-[#C19A6B]', 'text-white'); 
-                if(category === 'all' && tab.innerText === 'All Questions') tab.classList.add('active', 'bg-[#C19A6B]', 'text-white'); 
-                else if(tab.innerText.toLowerCase().includes(category)) tab.classList.add('active', 'bg-[#C19A6B]', 'text-white'); 
-            }); 
-            const items = document.querySelectorAll('.faq-item'); 
-            let visibleCount = 0; 
-            items.forEach(item => { 
-                if (category === 'all' || item.dataset.category === category) { 
-                    item.style.display = 'block'; 
-                    visibleCount++; 
-                } else { 
-                    item.style.display = 'none'; 
-                } 
-            }); 
-            document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0); 
+        function filterCategory(category) {
+            document.querySelectorAll('.category-tab').forEach(tab => { tab.classList.remove('active', 'bg-[#C19A6B]', 'text-white'); if(category === 'all' && tab.innerText.trim() === 'All Questions') tab.classList.add('active', 'bg-[#C19A6B]', 'text-white'); else if(tab.innerText.toLowerCase().includes(category) && category !== 'all') tab.classList.add('active', 'bg-[#C19A6B]', 'text-white'); });
+            const items = document.querySelectorAll('.faq-item'); let visibleCount = 0;
+            items.forEach(item => { if (category === 'all' || item.dataset.category === category) { item.style.display = 'block'; visibleCount++; } else { item.style.display = 'none'; } });
+            document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+            // reset open accordion when filtering for cleaner UI
+            if (activeFaqIndex !== null) {
+                const openAnswer = document.getElementById(`answer${activeFaqIndex}`);
+                const openIcon = document.getElementById(`icon${activeFaqIndex}`);
+                if(openAnswer) openAnswer.classList.remove('open');
+                if(openIcon) openIcon.classList.remove('rotate-icon');
+                activeFaqIndex = null;
+            }
         }
         
         if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-        document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
     </script>
 </body>
 </html>
